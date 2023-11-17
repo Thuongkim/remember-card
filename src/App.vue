@@ -6,16 +6,23 @@
   <interact-screen
     v-if="statusMatch === matchStatus.match"
     :cardsContext="settings.cardsContext"
-    :gameStartedAt="settings.startedAt"
     :totalBlocks="settings.totalBlocks"
+    @onFinish="onShowResult($event)"
+    @onBackMainScreen="statusMatch = matchStatus.default"
   ></interact-screen>
+  <result-screen
+    v-if="statusMatch === matchStatus.result"
+    :timeToFinish="settings.timeToFinish"
+    @onRestart="statusMatch = matchStatus.default"
+  ></result-screen>
 </template>
 
 <script>
 import MainScreen from "./components/MainScreen.vue";
 import InteractScreen from "./components/InteractScreen.vue";
+import ResultScreen from "./components/ResultScreen.vue";
 import { shuffle } from "./helpers/array";
-import { DEFAULT, MATCH } from "./enums/matchStatus";
+import { DEFAULT, MATCH, RESULT } from "./enums/matchStatus";
 export default {
   name: "App",
   data() {
@@ -24,11 +31,13 @@ export default {
       matchStatus: {
         default: DEFAULT,
         match: MATCH,
+        result: RESULT,
       },
       settings: {
         totalBlocks: 0,
         cardsContext: [],
         startedAt: null,
+        timeToFinish: 0,
       },
     };
   },
@@ -42,14 +51,21 @@ export default {
       totalCards = shuffle(totalCards, 4);
       this.settings.cardsContext = totalCards;
       this.settings.startedAt = new Date().getTime();
-
       // data ready
       this.statusMatch = MATCH;
+    },
+    onShowResult(finishedAt) {
+      this.settings.timeToFinish = Math.round(
+        (finishedAt - this.settings.startedAt) / 1000
+      );
+      // data ready
+      this.statusMatch = RESULT;
     },
   },
   components: {
     MainScreen,
     InteractScreen,
+    ResultScreen,
   },
 };
 </script>

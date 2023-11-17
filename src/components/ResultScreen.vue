@@ -1,32 +1,21 @@
-<template>
+<template lang="">
   <div class="screen">
-    <h1>POKE MEMORIES</h1>
-    <h3>Select mode to play!</h3>
-    <div class="actions">
-      <button @click="onStart(16)">
-        <span>4x4</span>
-        <span>Easy</span>
-      </button>
-      <button @click="onStart(36)">
-        <span>6x6</span>
-        <span>Normal</span>
-      </button>
-      <button @click="onStart(64)">
-        <span>8x8</span>
-        <span>Hard</span>
-      </button>
-      <button @click="onStart(100)">
-        <span>10x10</span>
-        <span>Super Hard</span>
-      </button>
-    </div>
+    <h1>✨ Congratulations ✨</h1>
+    <h3>Time you need to finish: {{ timeToFinish }}s</h3>
+    <button @click="onStartAgain()">Start Again</button>
   </div>
 </template>
 <script>
 export default {
+  props: {
+    timeToFinish: {
+      type: Number,
+      require: true,
+    },
+  },
   methods: {
-    onStart(totalBlocks) {
-      this.$emit("onStart", { totalBlocks });
+    onStartAgain() {
+      this.$emit("onRestart");
     },
   },
 };
@@ -65,9 +54,5 @@ button {
   font-size: 1.25rem;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
-}
-button:hover {
-  background-color: var(--light);
-  color: var(--dark);
 }
 </style>

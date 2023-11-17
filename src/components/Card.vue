@@ -1,12 +1,19 @@
 <template>
-  <div class="card" :class="{ disable: isDisable }">
+  <div
+    class="card"
+    :class="{ disable: isDisable }"
+    :style="{ height: `${cardHeight}px` }"
+  >
     <div
       class="card__inner"
       @click="onToggleCard()"
       :class="{ 'is-flipped': isFlipped }"
     >
       <div class="card__face card__face--front">
-        <div class="card__content"></div>
+        <div
+          class="card__content"
+          :style="{ backgroundSize: `${cardHeight / 3}px ${cardHeight / 3}px` }"
+        ></div>
       </div>
       <div class="card__face card__face--back">
         <div
@@ -34,12 +41,19 @@ export default {
     card: {
       type: [Number, String, Object, Array],
     },
+    cardHeight: {
+      type: Number,
+      require: true,
+    },
   },
   data() {
     return {
       isFlipped: false,
       isDisable: false,
     };
+  },
+  emits: {
+    onFlip: null,
   },
   methods: {
     onToggleCard() {
@@ -65,7 +79,6 @@ export default {
   display: inline-block;
   margin: 0 1rem 1rem 0;
   width: 90px;
-  height: 120px;
 }
 
 .card.disable .card__inner {
@@ -100,14 +113,14 @@ export default {
 }
 
 .card__face--front {
-  border: 5px solid black;
+  border: 2px solid black;
 }
 
 .card__face--front .card__content {
   background-image: url(../assets/images/icon_back.png);
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: 40px 40px;
+  /* background-size: 40px 40px; */
   width: 100%;
   height: 100%;
 }

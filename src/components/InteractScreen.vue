@@ -1,7 +1,7 @@
-<template lang="">
+<template lang="html">
   <div class="screen">
-    <h1>Interact Screen</h1>
-    <div align="center" v-if="!isFinished">
+    <button @click="onBackMainScreen()">↩ Back</button>
+    <div class="screen-inner">
       <card-flip
         v-for="(card, index) in cardsContext"
         :key="index"
@@ -9,10 +9,14 @@
         :ref="`card-${index}`"
         :imgBackFaceUrl="`images/${card}.png`"
         :card="{ key: index, value: card }"
+        :cardHeight="
+          this.cardHeight > this.cardHeightDefault
+            ? this.cardHeightDefault
+            : this.cardHeight
+        "
         @onFlip="checkRule($event)"
       ></card-flip>
     </div>
-    <h1 v-if="isFinished">Your Time you need to finish: {{ timeToFinish }}s</h1>
   </div>
 </template>
 <script>
@@ -24,10 +28,6 @@ export default {
       default: function () {
         return [];
       },
-    },
-    gameStartedAt: {
-      type: Number,
-      require: true,
     },
     totalBlocks: {
       type: Number,
@@ -42,9 +42,9 @@ export default {
       flippedCards: [],
       score: 0,
       scoreToFinish: this.totalBlocks / 2,
-      isFinished: false,
-      timeToFinish: 0,
       numberItemsOnRow: Math.sqrt(this.totalBlocks),
+      cardHeight: (window.innerHeight - 32) / Math.sqrt(this.totalBlocks) - 19,
+      cardHeightDefault: 120,
     };
   },
   methods: {
@@ -65,13 +65,11 @@ export default {
       ) {
         //logic when click two same cards, case true
         this.score += 1;
+        //logic finish
         if (this.score === this.scoreToFinish) {
           const finishedAt = new Date().getTime();
-          this.timeToFinish = Math.floor(
-            (finishedAt - this.gameStartedAt) / 1000
-          );
           setTimeout(() => {
-            this.isFinished = true;
+            this.$emit("onFinish", finishedAt);
           }, 1000);
         }
         //disable click card
@@ -90,7 +88,51 @@ export default {
         }, 500);
       }
     },
+    onBackMainScreen() {
+      this.$emit("onBackMainScreen");
+    },
   },
 };
 </script>
-<style lang=""></style>
+<style lang="css" scoped>
+.screen {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-color: var(--dark);
+  color: var(--light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.screen-inner {
+  margin-top: 1rem;
+}
+
+button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  font: var(--font);
+  background: transparent;
+  box-shadow: none;
+  border: 1px solid var(--light);
+  color: var(--light);
+  margin: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+button:hover {
+  background-color: var(--light);
+  color: var(--dark);
+}
+</style>
