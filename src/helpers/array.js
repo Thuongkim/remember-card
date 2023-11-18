@@ -6,6 +6,7 @@ export const shuffle = (array, shuffleLevel) => {
   return result;
 };
 
-export const randomNumber = (min, max) => { // min and max included 
-  return Math.floor(Math.random() * (max - min + 1) + min)
-}
+export const randomNumber = (min, max) => {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
