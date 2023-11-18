@@ -55,4 +55,13 @@ button {
   cursor: pointer;
   transition: background 0.3s ease-in-out;
 }
+@media only screen and (max-width: 640px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h3 {
+    margin-top: 1rem;
+    font-size: 2rem;
+  }
+}
 </style>

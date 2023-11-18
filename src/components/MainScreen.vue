@@ -1,6 +1,7 @@
-<template>
+<template lang="html">
   <div class="screen">
-    <h1>POKE MEMORIES</h1>
+    <img src="/logo.png" height="60" />
+    <h1>MEMORY CARDS</h1>
     <h3>Select mode to play!</h3>
     <div class="actions">
       <button @click="onStart(16)">
@@ -69,5 +70,14 @@ button {
 button:hover {
   background-color: var(--light);
   color: var(--dark);
+}
+@media only screen and (max-width: 640px) {
+  h1 {
+    font-size: 4rem;
+  }
+  .actions {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

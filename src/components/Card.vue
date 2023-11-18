@@ -2,7 +2,10 @@
   <div
     class="card"
     :class="{ disable: isDisable }"
-    :style="{ height: `${cardHeight}px` }"
+    :style="{
+      height: `${cardHeightResize}px`,
+      width: `${cardWidth}px`,
+    }"
   >
     <div
       class="card__inner"
@@ -12,7 +15,11 @@
       <div class="card__face card__face--front">
         <div
           class="card__content"
-          :style="{ backgroundSize: `${cardHeight / 3}px ${cardHeight / 3}px` }"
+          :style="{
+            backgroundSize: `${cardHeightResize / 4}px ${
+              cardHeightResize / 4
+            }px`,
+          }"
         ></div>
       </div>
       <div class="card__face card__face--back">
@@ -20,6 +27,9 @@
           class="card__content"
           :style="{
             backgroundImage: `url(${require('@/assets/' + imgBackFaceUrl)})`,
+            backgroundSize: `${cardHeightResize / 2}px ${
+              cardHeightResize / 2
+            }px`,
           }"
         ></div>
       </div>
@@ -45,11 +55,19 @@ export default {
       type: Number,
       require: true,
     },
+    cardWidth: {
+      type: Number,
+      require: true,
+    },
   },
   data() {
     return {
       isFlipped: false,
       isDisable: false,
+      cardHeightResize:
+        this.cardHeight > this.cardWidth * 1.34
+          ? this.cardWidth * 1.34
+          : this.cardHeight,
     };
   },
   emits: {

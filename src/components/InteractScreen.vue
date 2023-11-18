@@ -14,6 +14,11 @@
             ? this.cardHeightDefault
             : this.cardHeight
         "
+        :cardWidth="
+          this.cardWidth > this.cardWidthDefault
+            ? this.cardWidthDefault
+            : this.cardWidth
+        "
         @onFlip="checkRule($event)"
       ></card-flip>
     </div>
@@ -44,7 +49,9 @@ export default {
       scoreToFinish: this.totalBlocks / 2,
       numberItemsOnRow: Math.sqrt(this.totalBlocks),
       cardHeight: (window.innerHeight - 32) / Math.sqrt(this.totalBlocks) - 19,
+      cardWidth: window.innerWidth / Math.sqrt(this.totalBlocks) - 16,
       cardHeightDefault: 120,
+      cardWidthDefault: 90,
     };
   },
   methods: {
