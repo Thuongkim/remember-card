@@ -45,7 +45,7 @@ export default {
     onHandleBeforeStart(config) {
       this.settings.totalBlocks = config.totalBlocks;
       const arrayLength = config.totalBlocks / 2;
-      const randNumber = randomNumber(1, 14);
+      const randNumber = randomNumber(1, 848);
       const firstCards = Array.from(
         { length: arrayLength },
         (v, i) => i + randNumber
