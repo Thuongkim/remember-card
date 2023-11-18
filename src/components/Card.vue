@@ -27,8 +27,8 @@
           class="card__content"
           :style="{
             backgroundImage: `url(${require('@/assets/' + imgBackFaceUrl)})`,
-            backgroundSize: `${cardHeightResize / 2}px ${
-              cardHeightResize / 2
+            backgroundSize: `${cardHeightResize / 1.5}px ${
+              cardHeightResize / 1.5
             }px`,
           }"
         ></div>
@@ -122,7 +122,6 @@ export default {
   backface-visibility: hidden;
   overflow: hidden;
   border-radius: 1rem;
-  padding: 1rem;
   box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.2);
 }
 .card__face--back {
