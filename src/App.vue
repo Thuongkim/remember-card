@@ -21,7 +21,7 @@
 import MainScreen from "./components/MainScreen.vue";
 import InteractScreen from "./components/InteractScreen.vue";
 import ResultScreen from "./components/ResultScreen.vue";
-import { shuffle } from "./helpers/array";
+import { shuffle, randomNumber } from "./helpers/array";
 import { DEFAULT, MATCH, RESULT } from "./enums/matchStatus";
 export default {
   name: "App",
@@ -45,7 +45,11 @@ export default {
     onHandleBeforeStart(config) {
       this.settings.totalBlocks = config.totalBlocks;
       const arrayLength = config.totalBlocks / 2;
-      const firstCards = Array.from({ length: arrayLength }, (v, i) => i + 1);
+      const randNumber = randomNumber(1, 14);
+      const firstCards = Array.from(
+        { length: arrayLength },
+        (v, i) => i + randNumber
+      );
       const secondCards = [...firstCards];
       let totalCards = [...firstCards, ...secondCards];
       totalCards = shuffle(totalCards, 4);

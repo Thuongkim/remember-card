@@ -57,12 +57,10 @@ export default {
   methods: {
     checkRule(card) {
       let flippedCardsLength = this.flippedCards.length;
-      if (flippedCardsLength > 1) {
-        return false;
-      }
       this.flippedCards = [...this.flippedCards, card];
       flippedCardsLength = this.flippedCards.length;
       if (flippedCardsLength === 1) {
+        // when click 1 card nothing to do
         return false;
       }
       if (
@@ -88,11 +86,12 @@ export default {
         //logic when click on two different cards or double-click on one card, case false
         setTimeout(() => {
           //close card
-          this.$refs[`card-${this.flippedCards[0].key}`][0].onCloseCard();
-          this.$refs[`card-${this.flippedCards[1].key}`][0].onCloseCard();
+          this.flippedCards.forEach((flippedCard) => {
+            this.$refs[`card-${flippedCard.key}`][0].onCloseCard();
+          });
           //reset flippedCards
           this.flippedCards = [];
-        }, 500);
+        }, 800);
       }
     },
     onBackMainScreen() {
