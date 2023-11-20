@@ -13,6 +13,7 @@
   <result-screen
     v-if="statusMatch === matchStatus.result"
     :timeToFinish="settings.timeToFinish"
+    :bestTimeToFinish="settings.bestTimeToFinish"
     @onRestart="statusMatch = matchStatus.default"
   ></result-screen>
 </template>
@@ -38,6 +39,7 @@ export default {
         cardsContext: [],
         startedAt: null,
         timeToFinish: 0,
+        bestTimeToFinish: null,
       },
     };
   },
@@ -59,9 +61,15 @@ export default {
       this.statusMatch = MATCH;
     },
     onShowResult(finishedAt) {
+      const bestTimeMode = "bestTimeToFinish" + this.settings.totalBlocks;
+      const bestTimeToFinish = localStorage.getItem(bestTimeMode);
       this.settings.timeToFinish = Math.round(
         (finishedAt - this.settings.startedAt) / 1000
       );
+      if (!bestTimeToFinish || bestTimeToFinish > this.settings.timeToFinish) {
+        localStorage.setItem(bestTimeMode, this.settings.timeToFinish);
+        this.settings.bestTimeToFinish = localStorage.getItem(bestTimeMode);
+      }
       // data ready
       this.statusMatch = RESULT;
     },

@@ -2,6 +2,7 @@
   <div class="screen">
     <h1>✨ Congratulations ✨</h1>
     <h3>Time you need to finish: {{ timeToFinish }}s</h3>
+    <h3>Your highest score: {{ bestTimeToFinish }}s</h3>
     <button @click="onStartAgain()">Start Again</button>
   </div>
 </template>
@@ -9,6 +10,10 @@
 export default {
   props: {
     timeToFinish: {
+      type: Number,
+      require: true,
+    },
+    bestTimeToFinish: {
       type: Number,
       require: true,
     },
