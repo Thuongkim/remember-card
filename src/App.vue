@@ -68,8 +68,8 @@ export default {
       );
       if (!bestTimeToFinish || bestTimeToFinish > this.settings.timeToFinish) {
         localStorage.setItem(bestTimeMode, this.settings.timeToFinish);
-        this.settings.bestTimeToFinish = localStorage.getItem(bestTimeMode);
       }
+      this.settings.bestTimeToFinish = localStorage.getItem(bestTimeMode);
       // data ready
       this.statusMatch = RESULT;
     },
